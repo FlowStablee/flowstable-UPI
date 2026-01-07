@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.flowstable.upi.ussd.USSDController
-import com.google.android.material.card.MaterialCardView
+
 
 class MainActivity : AppCompatActivity() {
     
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        findViewById<MaterialCardView>(R.id.cardScanQR).setOnClickListener {
+        findViewById<View>(R.id.cardScanQR).setOnClickListener {
             if (checkCameraPermission()) {
                 startActivity(Intent(this, ScannerActivity::class.java))
             } else {
