@@ -10,7 +10,10 @@ class USSDService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
         
-        // Only process window state changes (USSD dialogs)
+        // Log event for debugging (optional filter in prod)
+        // Log.d("USSDService", "Event: ${event.eventType} Pkg: ${event.packageName}")
+
+        // Process both State Changes (Dialogs) and Content Changes (Updates within Dialogs)
         if (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &&
             event.eventType != AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
             return
@@ -154,6 +157,27 @@ class USSDService : AccessibilityService() {
 
     override fun onServiceConnected() {
         super.onServiceConnected()
+        USSDController.activeService = this
         // Service connected and ready
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (USSDController.activeService == this) {
+            USSDController.activeService = null
+        }
+    }
+
+    // Public method called by UI to inject manual input (PIN)
+    fun sendResponse(text: String) {
+        val root = rootInActiveWindow ?: return
+        
+        // Find input field in the active window
+        val inputFilled = fillUSSDInput(root, text)
+        if (inputFilled) {
+            clickSendButton(root)
+        }
+        
+        root.recycle()
     }
 }

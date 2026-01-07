@@ -37,8 +37,48 @@
         android:textSize="@dimen/text_body"
         android:gravity="center" />
 
+    <!-- PIN Entry Layout (Hidden by default) -->
+    <LinearLayout
+        android:id="@+id/layoutPinEntry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/spacing_lg">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter UPI PIN"
+            app:boxStrokeColor="@color/accent"
+            app:boxBackgroundColor="@color/surface_elevated"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:textColor="@color/text_primary"
+                android:maxLength="6" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmitPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:text="Secure Pay"
+            android:paddingVertical="12dp"
+            app:backgroundTint="@color/accent"
+            app:cornerRadius="@dimen/corner_radius_md" />
+
+    </LinearLayout>
+
     <!-- Info Card -->
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_xxl"
@@ -66,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_sm"
-                android:text="When prompted, please enter your UPI PIN manually. For security, the app cannot enter your PIN automatically."
+                android:text="If the screen goes blank, please check the system notification tray for USSD input."
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/text_caption"
                 android:lineSpacingMultiplier="1.3" />

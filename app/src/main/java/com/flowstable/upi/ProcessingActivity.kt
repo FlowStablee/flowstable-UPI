@@ -22,6 +22,23 @@ class ProcessingActivity : AppCompatActivity() {
         tvPaymentDetails = findViewById(R.id.tvPaymentDetails)
 
         updatePaymentDetails()
+        
+        findViewById<android.view.View>(R.id.btnSubmitPin).setOnClickListener {
+            val etPin = findViewById<android.widget.EditText>(R.id.etPin)
+            val pin = etPin.text.toString()
+            if (pin.isNotEmpty()) {
+                val service = USSDController.activeService
+                if (service != null) {
+                    service.sendResponse(pin)
+                    // Optimistic UI update
+                     android.widget.Toast.makeText(this, "Verifying PIN...", android.widget.Toast.LENGTH_SHORT).show()
+                     findViewById<android.view.View>(R.id.btnSubmitPin).isEnabled = false
+                } else {
+                     android.widget.Toast.makeText(this, "USSD Service not connected. Please try again.", android.widget.Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        
         observeUSSDStatus()
     }
 
@@ -54,6 +71,8 @@ class ProcessingActivity : AppCompatActivity() {
                     }
                     USSDController.State.CONFIRM -> {
                         tvStatus.text = "Waiting for UPI PIN..."
+                        findViewById<android.view.View>(R.id.layoutPinEntry).visibility = android.view.View.VISIBLE
+                        findViewById<android.view.View>(R.id.cardInfo).visibility = android.view.View.GONE
                     }
                     USSDController.State.SUCCESS -> {
                         navigateToResult(true)

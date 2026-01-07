@@ -25,6 +25,7 @@ object USSDController {
     var currentFlow: Flow = Flow.PAYMENT
     var currentPayment: UPIData? = null
     var lastBalance: String = ""
+    var activeService: com.flowstable.upi.ussd.USSDService? = null
 
     fun updateState(newState: State) {
         currentState = newState
