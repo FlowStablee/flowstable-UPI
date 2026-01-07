@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/spacing_lg">
+                android:layout_marginBottom="@dimen/spacing_sm">
 
                 <!-- Scan QR -->
                 <com.google.android.material.card.MaterialCardView
@@ -103,7 +103,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginEnd="@dimen/spacing_sm"
+                    android:layout_marginEnd="@dimen/spacing_xs"
                     app:cardBackgroundColor="@color/surface_elevated"
                     app:cardCornerRadius="@dimen/corner_radius_md"
                     app:cardElevation="0dp"
@@ -143,7 +143,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:layout_marginStart="@dimen/spacing_xs"
                     app:cardBackgroundColor="@color/surface_elevated"
                     app:cardCornerRadius="@dimen/corner_radius_md"
                     app:cardElevation="0dp"
@@ -169,9 +169,66 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_sm"
-                            android:text="UPI ID"
+                            android:text="Pay UPI"
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_body" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/spacing_lg">
+
+                <!-- Check Balance -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardCheckBalance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/surface_elevated"
+                    app:cardCornerRadius="@dimen/corner_radius_md"
+                    app:cardElevation="0dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/spacing_lg">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_size_md"
+                            android:layout_height="@dimen/icon_size_md"
+                            android:src="@drawable/ic_upi"
+                            android:contentDescription="Check Balance"
+                            app:tint="@color/accent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_md"
+                            android:text="Check Bank Balance"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_body" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_size_sm"
+                            android:layout_height="@dimen/icon_size_sm"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="@color/text_hint" />
 
                     </LinearLayout>
 

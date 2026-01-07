@@ -4,18 +4,27 @@ object USSDController {
 
     enum class State {
         IDLE,
+        SELECT_SIM,
         MENU_MAIN,
         ENTER_UPI,
         ENTER_AMOUNT,
         CONFIRM,
         SUCCESS,
-        FAILED
+        FAILED,
+        BALANCE_RESULT
+    }
+
+    enum class Flow {
+        PAYMENT,
+        BALANCE
     }
 
     var currentState: State = State.IDLE
         private set
 
+    var currentFlow: Flow = Flow.PAYMENT
     var currentPayment: UPIData? = null
+    var lastBalance: String = ""
 
     fun updateState(newState: State) {
         currentState = newState
@@ -24,57 +33,74 @@ object USSDController {
     fun reset() {
         currentState = State.IDLE
         currentPayment = null
+        lastBalance = ""
     }
 
     fun getNextInput(ussdText: String): String? {
+        val text = ussdText.lowercase()
+
+        // Handle SIM Selection if it appears as a USSD-like dialog
+        if (text.contains("select sim") || text.contains("choose sim")) {
+            updateState(State.SELECT_SIM)
+            return "1" // Default to SIM 1
+        }
+
+        return when (currentFlow) {
+            Flow.PAYMENT -> handlePaymentFlow(text)
+            Flow.BALANCE -> handleBalanceFlow(text)
+        }
+    }
+
+    private fun handlePaymentFlow(text: String): String? {
         val payment = currentPayment ?: return null
 
         return when {
-            // Main menu - select "Send Money" option
-            ussdText.contains("Send Money", ignoreCase = true) ||
-            ussdText.contains("1. Send", ignoreCase = true) -> {
+            text.contains("send money") || text.contains("1. send") -> {
                 updateState(State.MENU_MAIN)
-                "1" // Select Send Money
+                "1"
             }
-            
-            // UPI ID input
-            ussdText.contains("Enter UPI", ignoreCase = true) ||
-            ussdText.contains("VPA", ignoreCase = true) ||
-            ussdText.contains("Mobile/UPI", ignoreCase = true) -> {
+            text.contains("enter upi") || text.contains("vpa") || text.contains("mobile/upi") -> {
                 updateState(State.ENTER_UPI)
                 payment.upiId
             }
-            
-            // Amount input
-            ussdText.contains("Enter Amount", ignoreCase = true) ||
-            ussdText.contains("Amount", ignoreCase = true) -> {
+            text.contains("enter amount") || text.contains("amount") -> {
                 updateState(State.ENTER_AMOUNT)
                 payment.amount
             }
-            
-            // Confirmation screen - needs PIN
-            ussdText.contains("Confirm", ignoreCase = true) ||
-            ussdText.contains("Enter PIN", ignoreCase = true) ||
-            ussdText.contains("MPIN", ignoreCase = true) -> {
+            text.contains("confirm") || text.contains("enter pin") || text.contains("mpin") -> {
                 updateState(State.CONFIRM)
-                null // User must enter PIN manually for security
+                null
             }
-            
-            // Success markers
-            ussdText.contains("successful", ignoreCase = true) ||
-            ussdText.contains("Transaction ID", ignoreCase = true) -> {
+            text.contains("successful") || text.contains("transaction id") -> {
                 updateState(State.SUCCESS)
                 null
             }
-            
-            // Failure markers
-            ussdText.contains("failed", ignoreCase = true) ||
-            ussdText.contains("error", ignoreCase = true) ||
-            ussdText.contains("declined", ignoreCase = true) -> {
+            text.contains("failed") || text.contains("error") || text.contains("declined") -> {
                 updateState(State.FAILED)
                 null
             }
-            
+            else -> null
+        }
+    }
+
+    private fun handleBalanceFlow(text: String): String? {
+        return when {
+            text.contains("check balance") || text.contains("3. check") -> {
+                updateState(State.MENU_MAIN)
+                "3"
+            }
+            text.contains("enter pin") || text.contains("mpin") -> {
+                updateState(State.CONFIRM)
+                null
+            }
+            text.contains("balance is") || text.contains("rs.") -> {
+                // Extract balance
+                val regex = "rs\\.?\\s?([\\d.]+)".toRegex()
+                val match = regex.find(text)
+                lastBalance = match?.groupValues?.get(1) ?: text
+                updateState(State.BALANCE_RESULT)
+                null
+            }
             else -> null
         }
     }

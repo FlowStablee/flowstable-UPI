@@ -37,22 +37,34 @@ class ProcessingActivity : AppCompatActivity() {
             override fun run() {
                 when (USSDController.currentState) {
                     USSDController.State.IDLE -> {
-                        tvStatus.text = "Initializing..."
+                        tvStatus.text = "Initiating USSD Session..."
+                    }
+                    USSDController.State.SELECT_SIM -> {
+                        tvStatus.text = "Detecting SIM Selection..."
                     }
                     USSDController.State.MENU_MAIN -> {
-                        tvStatus.text = "Navigating menu..."
+                        tvStatus.text = "Accessing BHIM *99#..."
                     }
                     USSDController.State.ENTER_UPI -> {
-                        tvStatus.text = "Entering UPI ID..."
+                        tvStatus.text = "Entering Recipient UPI ID..."
                     }
                     USSDController.State.ENTER_AMOUNT -> {
-                        tvStatus.text = "Entering amount..."
+                        tvStatus.text = "Entering Amount..."
                     }
                     USSDController.State.CONFIRM -> {
-                        tvStatus.text = "Awaiting PIN entry..."
+                        tvStatus.text = "Waiting for UPI PIN..."
                     }
                     USSDController.State.SUCCESS -> {
                         navigateToResult(true)
+                        return
+                    }
+                    USSDController.State.BALANCE_RESULT -> {
+                        val intent = Intent(this@ProcessingActivity, ResultActivity::class.java).apply {
+                            putExtra("is_success", true)
+                            putExtra("message", "Your Bank Balance is: \nRs. ${USSDController.lastBalance}")
+                        }
+                        startActivity(intent)
+                        finish()
                         return
                     }
                     USSDController.State.FAILED -> {
@@ -67,7 +79,7 @@ class ProcessingActivity : AppCompatActivity() {
 
     private fun navigateToResult(success: Boolean) {
         val intent = android.content.Intent(this, ResultActivity::class.java)
-        intent.putExtra("success", success)
+        intent.putExtra("is_success", success) // Changed to "is_success" to match the new logic
         startActivity(intent)
         finish()
     }

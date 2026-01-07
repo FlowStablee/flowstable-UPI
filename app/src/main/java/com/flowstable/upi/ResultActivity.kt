@@ -15,7 +15,8 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
 
-        val success = intent.getBooleanExtra("success", false)
+        val isSuccess = intent.getBooleanExtra("is_success", false)
+        val customMessage = intent.getStringExtra("message")
         val payment = USSDController.currentPayment
 
         val ivStatus = findViewById<ImageView>(R.id.ivStatus)
@@ -24,17 +25,17 @@ class ResultActivity : AppCompatActivity() {
         val tvAmount = findViewById<TextView>(R.id.tvAmount)
         val btnDone = findViewById<MaterialButton>(R.id.btnDone)
 
-        if (success) {
+        if (isSuccess) {
             ivStatus.setImageResource(R.drawable.ic_success)
             ivStatus.setColorFilter(ContextCompat.getColor(this, R.color.success))
             tvTitle.text = "Payment Successful"
-            tvMessage.text = "Sent to ${payment?.name?.ifEmpty { payment.upiId } ?: "Unknown"}"
+            tvMessage.text = customMessage ?: "Sent to ${payment?.name?.ifEmpty { payment.upiId } ?: "Unknown"}"
             tvAmount.text = "₹${payment?.amount ?: "0"}"
         } else {
             ivStatus.setImageResource(R.drawable.ic_error)
             ivStatus.setColorFilter(ContextCompat.getColor(this, R.color.error))
             tvTitle.text = "Payment Failed"
-            tvMessage.text = "Please try again"
+            tvMessage.text = customMessage ?: "Please try again"
             tvAmount.visibility = android.view.View.GONE
         }
 

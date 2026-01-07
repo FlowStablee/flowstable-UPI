@@ -40,16 +40,38 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<MaterialCardView>(R.id.cardEnterUPI).setOnClickListener {
+        findViewById<View>(R.id.cardEnterUPI).setOnClickListener {
             startActivity(Intent(this, PaymentActivity::class.java))
         }
 
-        findViewById<MaterialCardView>(R.id.cardServiceStatus).setOnClickListener {
+        findViewById<View>(R.id.cardCheckBalance).setOnClickListener {
+            checkBalance()
+        }
+
+        findViewById<View>(R.id.cardServiceStatus).setOnClickListener {
             // Open accessibility settings
-            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-            startActivity(intent)
+            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
             Toast.makeText(this, "Enable FlowStable USSD Service", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun checkBalance() {
+        if (!isAccessibilityServiceEnabled()) {
+            Toast.makeText(this, "Please enable Accessibility Service first", Toast.LENGTH_LONG).show()
+            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+            return
+        }
+
+        USSDController.reset()
+        USSDController.currentFlow = USSDController.Flow.BALANCE
+        
+        val intent = Intent(Intent.ACTION_CALL).apply {
+            data = Uri.parse("tel:" + Uri.encode("*99#"))
+        }
+        
+        // Start processing activity first so it's ready to observe
+        startActivity(Intent(this, ProcessingActivity::class.java))
+        startActivity(intent)
     }
 
     private fun checkPermissions() {
