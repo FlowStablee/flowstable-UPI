@@ -51,6 +51,24 @@ class MainActivity : AppCompatActivity() {
             checkBalance()
         }
 
+        findViewById<View>(R.id.cardVoicePay).setOnClickListener {
+            // NPCI 123PAY Service
+            val intent = Intent(Intent.ACTION_CALL).apply {
+                data = Uri.parse("tel:08045163666")
+            }
+            if (checkPhonePermission()) {
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Phone permission needed for Voice Pay", Toast.LENGTH_SHORT).show()
+                requestPhonePermission()
+            }
+        }
+
+        findViewById<View>(R.id.cardHistory).setOnClickListener {
+            // Placeholder for transactions
+             Toast.makeText(this, "Transaction history coming soon", Toast.LENGTH_SHORT).show()
+        }
+
         findViewById<View>(R.id.cardServiceStatus).setOnClickListener {
             // Open accessibility settings
             startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
