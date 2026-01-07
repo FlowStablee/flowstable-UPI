@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/background"
+    android:padding="@dimen/spacing_xl">
+
+    <ImageView
+        android:id="@+id/ivStatus"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/ic_success"
+        android:contentDescription="Status" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:text="Payment Successful"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_heading"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:text="₹0"
+        android:textColor="@color/text_primary"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:text="Sent to recipient"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/text_body" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/spacing_xxl"
+        android:text="Done"
+        android:textSize="@dimen/text_body"
+        android:textStyle="bold"
+        app:cornerRadius="@dimen/corner_radius_md"
+        app:backgroundTint="@color/surface_elevated" />
+
+</LinearLayout>

@@ -27,6 +27,23 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ScannerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ProcessingActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ResultActivity"
+            android:exported="false" />
+
         <service
             android:name=".ussd.USSDService"
             android:label="@string/accessibility_service_label"

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/background"
+    android:padding="@dimen/spacing_xl">
+
+    <!-- Loading Animation -->
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:indeterminate="true"
+        app:indicatorColor="@color/accent"
+        app:trackColor="@color/surface_elevated"
+        app:indicatorSize="64dp" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xl"
+        android:text="Processing..."
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_title"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvPaymentDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:text="Please wait"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/text_body"
+        android:gravity="center" />
+
+    <!-- Info Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xxl"
+        app:cardBackgroundColor="@color/card_background"
+        app:cardCornerRadius="@dimen/corner_radius_md"
+        app:cardElevation="0dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/divider">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_md">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚠️ Important"
+                android:textColor="@color/warning"
+                android:textSize="@dimen/text_body"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:text="When prompted, please enter your UPI PIN manually. For security, the app cannot enter your PIN automatically."
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_caption"
+                android:lineSpacingMultiplier="1.3" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
