@@ -3,22 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="#121212">
 
+    <!-- Top App Bar (GPay Style Pill) -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        android:paddingTop="@dimen/spacing_lg"
+        android:paddingHorizontal="@dimen/spacing_md">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
-            app:title="FlowStable"
-            app:titleTextColor="@color/text_primary"
-            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_search_pill"
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:paddingVertical="10dp"
+            android:elevation="4dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_upi"
+                app:tint="@color/text_secondary"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/spacing_md"
+                android:text="Pay using UPI ID or Number"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"/>
+            
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_person"
+                app:tint="@color/accent"
+                android:background="@drawable/circle_bg_small"/>
+
+        </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -31,274 +59,328 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/spacing_md">
+            android:paddingBottom="100dp">
 
-            <!-- Hero: Scan & Pay -->
+            <!-- Hero Banner: Offline Mode -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardScanQR"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:layout_marginBottom="@dimen/spacing_lg"
-                app:cardBackgroundColor="@color/surface_elevated"
-                app:cardCornerRadius="@dimen/corner_radius_lg"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_md"
+                android:layout_marginTop="@dimen/spacing_lg"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
+                app:cardBackgroundColor="#1E1E1E">
+                
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:scaleType="centerCrop"
+                    android:src="@android:color/holo_purple"
+                    android:alpha="0.2"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@drawable/ic_qr_scan"
-                        app:tint="@color/accent"
-                        android:contentDescription="Scan QR" />
-
+                    android:padding="@dimen/spacing_lg">
+                    
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_md"
-                        android:text="Tap to Scan &amp; Pay"
-                        android:textColor="@color/text_primary"
-                        android:textSize="@dimen/text_heading"
-                        android:textStyle="bold" />
+                        android:text="FlowStable Offline"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
                         
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_xs"
-                        android:text="Works completely offline"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="@dimen/text_caption" />
+                        android:text="No Internet? No Problem.\nPay seamlessly using USSD *99#"
+                        android:textColor="#B0B0B0"
+                        android:layout_marginTop="4dp"
+                        android:textSize="14sp"/>
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/cardServiceStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Check Status"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_arrow_right"
+                        app:iconGravity="textEnd"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:textColor="@color/accent"/>
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Dashboard Grid -->
+            <!-- Section: Transfer Money -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_md"
-                android:text="Payments & Services"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_caption"
-                android:textAllCaps="true"
-                android:letterSpacing="0.1" />
+                android:text="Transfer Money"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginStart="@dimen/spacing_md"
+                android:layout_marginTop="@dimen/spacing_xl"/>
 
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:rowCount="3"
-                android:useDefaultMargins="false"
-                android:alignmentMode="alignMargins">
-
-                <!-- Row 1 Left: Enter UPI ID -->
-                <com.google.android.material.card.MaterialCardView
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:paddingHorizontal="@dimen/spacing_md">
+                
+                <!-- To Contact/Mobile -->
+                <LinearLayout
                     android:id="@+id/cardEnterUPI"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginEnd="@dimen/spacing_xs"
-                    android:layout_marginBottom="@dimen/spacing_md"
-                    app:cardBackgroundColor="@color/card_background"
-                    app:cardCornerRadius="@dimen/corner_radius_md"
-                    app:cardElevation="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_lg">
-
+                    <FrameLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/circle_bg_action">
                         <ImageView
-                            android:layout_width="@dimen/icon_size_md"
-                            android:layout_height="@dimen/icon_size_md"
-                            android:src="@drawable/ic_upi"
-                            app:tint="@color/text_primary" />
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_mobile"
+                            app:tint="@android:color/white"/>
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="To Mobile"
+                        android:textColor="#E0E0E0"
+                        android:textSize="12sp"/>
+                </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_md"
-                            android:text="Pay to UPI"
-                            android:textColor="@color/text_primary"
-                            android:textSize="@dimen/text_body" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Row 1 Right: Check Balance -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardCheckBalance"
+                <!-- To Bank (Placeholder) -->
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginStart="@dimen/spacing_xs"
-                    android:layout_marginBottom="@dimen/spacing_md"
-                    app:cardBackgroundColor="@color/card_background"
-                    app:cardCornerRadius="@dimen/corner_radius_md"
-                    app:cardElevation="0dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_lg">
-
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <FrameLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/circle_bg_action">
                         <ImageView
-                            android:layout_width="@dimen/icon_size_md"
-                            android:layout_height="@dimen/icon_size_md"
-                            android:src="@drawable/ic_upi"
-                            app:tint="@color/success" />
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_bank"
+                            app:tint="@android:color/white"/>
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="To Bank"
+                        android:textColor="#E0E0E0"
+                        android:textSize="12sp"/>
+                </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_md"
-                            android:text="Check Balance"
-                            android:textColor="@color/text_primary"
-                            android:textSize="@dimen/text_body" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Row 2 Left: Voice Pay -->
-                <com.google.android.material.card.MaterialCardView
+                <!-- To Self/Voice (Mapped to Voice Pay) -->
+                <LinearLayout
                     android:id="@+id/cardVoicePay"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginEnd="@dimen/spacing_xs"
-                    android:layout_marginBottom="@dimen/spacing_md"
-                    app:cardBackgroundColor="@color/card_background"
-                    app:cardCornerRadius="@dimen/corner_radius_md"
-                    app:cardElevation="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_lg">
-
+                    <FrameLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/circle_bg_action">
                         <ImageView
-                            android:layout_width="@dimen/icon_size_md"
-                            android:layout_height="@dimen/icon_size_md"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
                             android:src="@drawable/ic_call"
-                            app:tint="@color/warning" />
+                            app:tint="@android:color/white"/>
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Voice Pay"
+                        android:textColor="#E0E0E0"
+                        android:textSize="12sp"/>
+                </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_md"
-                            android:text="Voice Pay"
-                            android:textColor="@color/text_primary"
-                            android:textSize="@dimen/text_body" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Row 2 Right: History (Placeholder) -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardHistory"
+                <!-- Check Balance -->
+                <LinearLayout
+                    android:id="@+id/cardCheckBalance"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginStart="@dimen/spacing_xs"
-                    android:layout_marginBottom="@dimen/spacing_md"
-                    app:cardBackgroundColor="@color/card_background"
-                    app:cardCornerRadius="@dimen/corner_radius_md"
-                    app:cardElevation="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_lg">
-
+                    <FrameLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/circle_bg_action">
                         <ImageView
-                            android:layout_width="@dimen/icon_size_md"
-                            android:layout_height="@dimen/icon_size_md"
-                            android:src="@drawable/ic_history"
-                            app:tint="@color/text_secondary" />
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_arrow_down"
+                            app:tint="@android:color/white"/>
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Balance"
+                        android:textColor="#E0E0E0"
+                        android:textSize="12sp"/>
+                </LinearLayout>
 
+            </LinearLayout>
+
+            <!-- Section: Recent People (GPay Style) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="People"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginStart="@dimen/spacing_md"
+                android:layout_marginTop="@dimen/spacing_xl"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:paddingHorizontal="@dimen/spacing_md">
+                
+                <!-- Person 1 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="20dp">
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:background="@drawable/circle_bg_small">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_md"
-                            android:text="History"
-                            android:textColor="@color/text_primary"
-                            android:textSize="@dimen/text_body" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-            </GridLayout>
-
-            <!-- Status Footer -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardServiceStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_lg"
-                app:cardBackgroundColor="#2A2A2A"
-                app:cardCornerRadius="@dimen/corner_radius_md"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/spacing_md">
-
-                    <View
-                        android:id="@+id/statusIndicator"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:background="@drawable/circle_indicator" />
-
+                            android:layout_gravity="center"
+                            android:text="AB"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"/>
+                    </FrameLayout>
                     <TextView
-                        android:id="@+id/tvServiceStatus"
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_md"
-                        android:text="Service Active"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="@dimen/text_caption" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-                        
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Configure"
-                        android:textColor="@color/accent"
-                        android:textSize="@dimen/text_caption"
-                        android:textStyle="bold" />
-
+                        android:layout_marginTop="6dp"
+                        android:text="Alex"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="#E0E0E0"
+                        android:textSize="12sp"/>
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+
+                 <!-- Person 2 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="20dp">
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:background="@drawable/circle_bg_small">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="M"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"/>
+                    </FrameLayout>
+                    <TextView
+                         android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Mom"
+                        android:gravity="center"
+                        android:singleLine="true"
+                         android:ellipsize="end"
+                        android:textColor="#E0E0E0"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                                 <!-- Person 3 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="20dp">
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:background="@drawable/circle_bg_small">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="S"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"/>
+                    </FrameLayout>
+                    <TextView
+                         android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Shop"
+                        android:gravity="center"
+                        android:singleLine="true"
+                         android:ellipsize="end"
+                        android:textColor="#E0E0E0"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <!-- Floating Action Button for Scan -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/cardScanQR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:text="Scan any QR"
+        android:textColor="@android:color/white"
+        app:icon="@drawable/ic_qr_scan"
+        app:iconTint="@android:color/white"
+        app:backgroundTint="@color/accent"
+        android:contentDescription="Scan QR Code"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
