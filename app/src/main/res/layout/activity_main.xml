@@ -63,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_md"
-                        android:text="Tap to Scan & Pay"
+                        android:text="Tap to Scan &amp; Pay"
                         android:textColor="@color/text_primary"
                         android:textSize="@dimen/text_heading"
                         android:textStyle="bold" />
