@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FlowStable UPI</string>
+    <string name="accessibility_service_label">FlowStable USSD Service</string>
+    <string name="accessibility_service_description">Automates USSD interactions for offline UPI payments.</string>
+</resources>
