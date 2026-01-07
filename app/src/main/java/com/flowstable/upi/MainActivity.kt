@@ -3,12 +3,15 @@ package com.flowstable.upi
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.flowstable.upi.ussd.USSDController
 import com.google.android.material.card.MaterialCardView
 
 class MainActivity : AppCompatActivity() {
