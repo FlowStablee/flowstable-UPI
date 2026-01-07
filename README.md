@@ -13,13 +13,13 @@ The system operates on a **Finite State Automaton (FSA)** model, enforcing deter
 
 ```mermaid
 graph TD
-    A[Idle State] -->|SigInt: *99#| B(USSD Gateway Handshake)
-    B -->|ACK: 200 OK| C{Data Stream Analysis}
-    C -->|Regex Match: 'Send Money'| D[MenuItem Selection Vector]
-    C -->|Regex Match: 'Enter UPI'| E[VPA Injection Protocol]
-    E -->|Payload: VPA| F[Amount Serialization Phase]
-    F -->|Payload: Int64| G[Security Challenge (PIN)]
-    G -->|Manual Input| H[Transaction Finality]
+    A["Idle State"] -->|SigInt: *99#| B("USSD Gateway Handshake")
+    B -->|ACK: 200 OK| C{"Data Stream Analysis"}
+    C -->|Regex Match: 'Send Money'| D["MenuItem Selection Vector"]
+    C -->|Regex Match: 'Enter UPI'| E["VPA Injection Protocol"]
+    E -->|Payload: VPA| F["Amount Serialization Phase"]
+    F -->|Payload: Int64| G["Security Challenge (PIN)"]
+    G -->|Manual Input| H["Transaction Finality"]
 ```
 
 ## System Modules
