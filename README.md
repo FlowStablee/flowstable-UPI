@@ -66,4 +66,4 @@ git clone https://github.com/FlowStablee/flowstable-UPI.git
 *   **PIN Entry**: The system intentionally halts automation at the `CONFIRM` state (MPIN entry) to maintain a Zero-Trust architecture regarding sensitive user credentials. The `AccessibilityService` is programmed to yield control to the Human Interface Device (HID) layer at this specific interrupt.
 
 ---
-*FlowStable: Quantizing the Analog Signal of Finance.*
+*FLowStble All Rights Reserved.*
