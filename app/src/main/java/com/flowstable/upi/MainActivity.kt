@@ -64,11 +64,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<View>(R.id.cardHistory).setOnClickListener {
-            // Placeholder for transactions
-             Toast.makeText(this, "Transaction history coming soon", Toast.LENGTH_SHORT).show()
-        }
-
         findViewById<View>(R.id.cardServiceStatus).setOnClickListener {
             // Open accessibility settings
             startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
@@ -134,18 +129,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateServiceStatus() {
         val isServiceEnabled = isAccessibilityServiceEnabled()
-        val statusIndicator = findViewById<android.view.View>(R.id.statusIndicator)
-        val tvServiceStatus = findViewById<android.widget.TextView>(R.id.tvServiceStatus)
-        val tvServiceHint = findViewById<android.widget.TextView>(R.id.tvServiceHint)
+        val btnServiceStatus = findViewById<com.google.android.material.button.MaterialButton>(R.id.cardServiceStatus)
 
         if (isServiceEnabled) {
-            statusIndicator.setBackgroundResource(R.drawable.circle_indicator)
-            tvServiceStatus.text = "USSD Service Active"
-            tvServiceHint.text = "Ready to process offline payments"
+            btnServiceStatus.text = "Service Active"
+            btnServiceStatus.setTextColor(ContextCompat.getColor(this, R.color.success))
+            btnServiceStatus.setIconResource(R.drawable.ic_check_circle)
+            btnServiceStatus.iconTint = androidx.core.content.ContextCompat.getColorStateList(this, R.color.success)
         } else {
-            statusIndicator.setBackgroundColor(ContextCompat.getColor(this, R.color.warning))
-            tvServiceStatus.text = "Service Not Enabled"
-            tvServiceHint.text = "Tap to enable accessibility service"
+            btnServiceStatus.text = "Check Status"
+            btnServiceStatus.setTextColor(ContextCompat.getColor(this, R.color.accent))
+            btnServiceStatus.setIconResource(R.drawable.ic_arrow_right)
+            btnServiceStatus.iconTint = androidx.core.content.ContextCompat.getColorStateList(this, R.color.accent)
         }
     }
 
