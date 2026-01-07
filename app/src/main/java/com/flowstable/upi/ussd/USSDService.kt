@@ -35,9 +35,16 @@ class USSDService : AccessibilityService() {
         val nextInput = USSDController.getNextInput(ussdText)
         
         if (nextInput != null) {
-            // Automatically fill the input
-            fillUSSDInput(source, nextInput)
-            clickSendButton(source)
+            // Automatically fill the input if editable field exists
+            val inputFilled = fillUSSDInput(source, nextInput)
+            
+            if (inputFilled) {
+                clickSendButton(source)
+            } else {
+                // If no input field, maybe it's a direct choice (like SIM selection)
+                // Try to find a button/text that matches the choice
+                clickMatchingOption(source, nextInput)
+            }
         }
 
         source.recycle()
@@ -73,17 +80,45 @@ class USSDService : AccessibilityService() {
         }
     }
 
-    private fun fillUSSDInput(root: AccessibilityNodeInfo, text: String) {
+    private fun fillUSSDInput(root: AccessibilityNodeInfo, text: String): Boolean {
         val editTexts = ArrayList<AccessibilityNodeInfo>()
         findNodesByClassName(root, "android.widget.EditText", editTexts)
         
+        var filled = false
         for (editText in editTexts) {
             if (editText.isEditable) {
                 val args = Bundle()
                 args.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text)
                 editText.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)
+                filled = true
             }
             // Don't recycle here as they are needed for list, allow system to handle or recycle later if strictly managing
+        }
+        return filled
+    }
+
+    private fun clickMatchingOption(root: AccessibilityNodeInfo, choice: String) {
+        // Look for buttons or text views that might be the choice
+        val nodes = ArrayList<AccessibilityNodeInfo>()
+        findClickableNodes(root, nodes)
+        
+        for (node in nodes) {
+            val text = node.text?.toString()?.lowercase() ?: ""
+            if (text == choice.lowercase() || text.contains("sim ${choice.lowercase()}") || text.startsWith("${choice.lowercase()}.")) {
+                node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                return
+            }
+        }
+    }
+
+    private fun findClickableNodes(root: AccessibilityNodeInfo, outList: MutableList<AccessibilityNodeInfo>) {
+        if (root.isClickable) {
+            outList.add(root)
+        }
+        for (i in 0 until root.childCount) {
+            val child = root.getChild(i) ?: continue
+            findClickableNodes(child, outList)
+            child.recycle() // Recycle child after use
         }
     }
 
