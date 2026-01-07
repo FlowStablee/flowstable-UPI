@@ -74,7 +74,8 @@ class USSDService : AccessibilityService() {
     }
 
     private fun fillUSSDInput(root: AccessibilityNodeInfo, text: String) {
-        val editTexts = root.findAccessibilityNodeInfosByClassName("android.widget.EditText")
+        val editTexts = ArrayList<AccessibilityNodeInfo>()
+        findNodesByClassName(root, "android.widget.EditText", editTexts)
         
         for (editText in editTexts) {
             if (editText.isEditable) {
@@ -82,13 +83,13 @@ class USSDService : AccessibilityService() {
                 args.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text)
                 editText.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)
             }
-            editText.recycle()
+            // Don't recycle here as they are needed for list, allow system to handle or recycle later if strictly managing
         }
     }
 
     private fun clickSendButton(root: AccessibilityNodeInfo) {
-        // Find and click the Send/OK button
-        val buttons = root.findAccessibilityNodeInfosByClassName("android.widget.Button")
+        val buttons = ArrayList<AccessibilityNodeInfo>()
+        findNodesByClassName(root, "android.widget.Button", buttons)
         
         for (button in buttons) {
             val buttonText = button.text?.toString()?.lowercase() ?: ""
@@ -96,10 +97,19 @@ class USSDService : AccessibilityService() {
                 buttonText.contains("ok") || 
                 buttonText.contains("reply")) {
                 button.performAction(AccessibilityNodeInfo.ACTION_CLICK)
-                button.recycle()
                 return
             }
-            button.recycle()
+        }
+    }
+
+    private fun findNodesByClassName(root: AccessibilityNodeInfo, className: String, outList: MutableList<AccessibilityNodeInfo>) {
+        if (root.className?.toString() == className) {
+            outList.add(root)
+        }
+
+        for (i in 0 until root.childCount) {
+            val child = root.getChild(i) ?: continue
+            findNodesByClassName(child, className, outList)
         }
     }
 
